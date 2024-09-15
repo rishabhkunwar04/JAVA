@@ -20,3 +20,4 @@
   Execution: To run the compiled bytecode, users need the JRE. The JRE contains the JVM, which executes the bytecode. The JVM converts the bytecode into machine code that can be understood by the hardware.
   Runtime: During execution, the JVM manages memory, handles exceptions, and performs JIT compilation to optimize performance.
 
+### week_4
