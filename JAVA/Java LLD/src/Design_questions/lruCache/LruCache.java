@@ -3,7 +3,7 @@ package Design_questions.lruCache;
 import java.util.HashMap;
 import java.util.Map;
 //
-public class LruCache<K,V> {
+public class  LruCache<K,V> {
     private int capacity;
     private Node<K,V> head;
     private Node<K,V> tail;
