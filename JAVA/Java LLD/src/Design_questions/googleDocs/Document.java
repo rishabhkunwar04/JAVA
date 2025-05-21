@@ -8,8 +8,7 @@ public class Document {
     private String content;
     private String docName;
     private String docId;
-    private
-    Map<String,Permission>docMap;
+    private Map<String,Permission>docMap;
     public Document(User user,String content, String docName){
         this.content = content;
         this.docName = docName;
