@@ -30,15 +30,17 @@ package Creational_Pattern.singleton;
 //// 1. eager initialization waste space it create obj in advance when class loaded,
 //// lets suppose client didnt need any obj to use then its just space wastage
 /// final prevents the instance from being reassigned after initialization.
-//
-//public class Singleton {
-//    private static  final Singleton instance=new Singleton();
-//    private Singleton(){}
-//    public static Singleton getInstance(){
-//
-//        return instance;
-//    }
-//}
+/*
+public class Singleton {
+    private static  final Singleton instance=new Singleton();
+    private Singleton(){}
+    public static Singleton getInstance(){
+
+        return instance;
+    }
+}
+
+ */
 
 
 ///*** Thread safe lazy Initialization *** //
