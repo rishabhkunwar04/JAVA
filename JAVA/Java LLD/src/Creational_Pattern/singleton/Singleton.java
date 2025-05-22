@@ -1,5 +1,8 @@
 package Creational_Pattern.singleton;
 /*
+==> The Singleton Design Pattern is a creational pattern that ensures a class has only one instance and provides a global point of access to that instance.
+
+
 1.  if constructor is private client cannot create obj of class
 2. get instance method is static because for nonstatic method we need obj to invoke it
 3. instance variable is static because in static method getinstance we have to use static variable
