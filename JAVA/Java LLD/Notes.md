@@ -10,3 +10,5 @@
 
 ``` java.lang.StringBuilder#append() (unsynchronized)```
 ``` java.lang.StringBuffer#append() (synchronized) ```
+
+![alt text](image.png)
