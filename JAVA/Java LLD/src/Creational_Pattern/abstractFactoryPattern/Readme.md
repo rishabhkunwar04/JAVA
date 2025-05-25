@@ -1,4 +1,4 @@
-```agsl
+```java
 // Abstract Products
 interface Shape {
     void draw();
