@@ -1,4 +1,8 @@
 ## Strategy Pattern
+- The Strategy Design Pattern is a behavioral design pattern that enables selecting an algorithm's behavior at runtime
+**when to use**:
+1. Multiple algorithms for a task
+2. Behavior changes at runtime
 ``` java
 
 
