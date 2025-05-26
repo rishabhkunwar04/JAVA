@@ -7,6 +7,12 @@
 2. Object construction is complex or involves multiple steps
 **disadvantage** : extra boiler plate code added for obj creation
 
+**Immutability and Builder**
+Builder pattern promotes immutability because:
+- All fields are set inside the builder, not changed after construction.
+- The built object can have only getter methods (no setters).
+- Ensures thread-safety and predictable behavior in concurrent environments.
+
 ```java
 ## Without Builder Pattern (Telescoping Constructor Problem)
 
