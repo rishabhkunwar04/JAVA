@@ -1,78 +1,106 @@
 package Design_questions.taskManagmentSystem;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TaskService {
 
-    List<Task>taskList;
-    List<Task>taskHistory;
+    private final List<Task> taskList;
+    private final List<Task> taskHistory;
 
-      public TaskService(){
-        this.taskList = new ArrayList<>();
-        this.taskHistory = new ArrayList<>();
-      }
+    public TaskService() {
+        this.taskList = Collections.synchronizedList(new ArrayList<>());
+        this.taskHistory = Collections.synchronizedList(new ArrayList<>());
+    }
 
-    // Method to create a new task
-    public Task addToTaskList( Task newTask) {
+    public Task addToTaskList(Task newTask) {
         taskList.add(newTask);
         return newTask;
     }
-    // Method to Delete Task
+
     public void deleteTaskByID(String taskId) {
-        Task taskToDelete = null;
-        for (Task task : taskList) {
-            if (task.getTaskId().equals(taskId)) {
-                taskToDelete = task;
-                break;
-            }
-        }
-        if (taskToDelete != null) {
-            taskList.remove(taskToDelete);
-        } else {
-            throw new IllegalArgumentException("Task not found");
-        }
+        Task taskToDelete = findTaskById(taskId);
+        taskList.remove(taskToDelete);
+        taskHistory.add(taskToDelete);
     }
-    //Method to Delete task
-    public void deleteTask(Task task) {
-        if (taskList.remove(task)) {
-            taskHistory.add(task); // Optionally, add to history
-        } else {
-            throw new IllegalArgumentException("Task not found");
+
+    public void updateTaskStatus(String taskId, String status) {
+        Task task = findTaskById(taskId);
+        task.setStatus(status);
+        if (status.equalsIgnoreCase("Completed")) {
+            taskHistory.add(task);
+            taskList.remove(task);
         }
     }
 
-    // Method to update the status of a task
-    public void updateTaskStatus(String taskId, String status) {
-        for (Task task : taskList) {
-            if (task.getTaskId().equals(taskId)) {
-                task.setStatus(status);
-                if (status.equals("Completed")){
-                    taskHistory.add(task); // Move to history if completed
-                    taskList.remove(task); // Remove from current task list
-                }
-                return;
-            }
-        }
-        throw new IllegalArgumentException("Task not found");
-    }
-    // Method to get all tasks
     public List<Task> getTaskHistory() {
         return new ArrayList<>(taskHistory);
     }
 
-
-    // method to  sort tasks by priority
-    public List<Task> getTasksSorted(String sortBy) {
-        if (sortBy.equals("priority")) {
-            taskList.sort((task1, task2) -> Integer.compare(task1.getPriority(), task2.getPriority()));
-        }else if(sortBy.equals("dueDate")) {
-            taskList.sort((task1, task2) -> task1.getDueDate().compareTo(task2.getDueDate()));
-
-        }else{
-            throw new IllegalArgumentException("Provide valid criteria to sort tasks");
-        }
-        return new ArrayList<>(taskList);
+    public List<Task> getSortedTaskList(String sortBy) {
+        return taskList.stream()
+                .sorted((t1, t2) -> {
+                    if (sortBy.equals("priority")) {
+                        return Integer.compare(t1.getPriority(), t2.getPriority());
+                    } else if (sortBy.equals("dueDate")) {
+                        return t1.getDueDate().compareTo(t2.getDueDate());
+                    }
+                    return 0;
+                })
+                .collect(Collectors.toList());
     }
 
+    public void assignTaskToUser(String taskId, User user) {
+        Task task = findTaskById(taskId);
+        task.setAssignedUser(user);
+    }
+
+    public void setTaskReminder(String taskId, Date reminderDate) {
+        Task task = findTaskById(taskId);
+        task.setReminderDate(reminderDate);
+    }
+
+    // Search tasks by status
+    public List<Task> searchTasksByStatus(String status) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getStatus().equalsIgnoreCase(status)) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
+    // Filter tasks by assigned user
+    public List<Task> filterTasksByUser(User user) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getAssignedUser() != null && task.getAssignedUser().equals(user)) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
+    // Filter tasks by priority
+    public List<Task> filterTasksByPriority(int priority) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getPriority() == priority) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
+    // Find a task by ID
+    private Task findTaskById(String taskId) {
+        for (Task task : taskList) {
+            if (task.getTaskId().equals(taskId)) {
+                return task;
+            }
+        }
+        throw new IllegalArgumentException("Task not found");
+    }
 }
