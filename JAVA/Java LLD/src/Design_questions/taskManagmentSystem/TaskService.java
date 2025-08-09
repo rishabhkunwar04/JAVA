@@ -2,7 +2,6 @@ package Design_questions.taskManagmentSystem;
 
 import java.sql.Date;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TaskService {
 
@@ -38,18 +37,9 @@ public class TaskService {
         return new ArrayList<>(taskHistory);
     }
 
-    public List<Task> getSortedTaskList(String sortBy) {
-        return taskList.stream()
-                .sorted((t1, t2) -> {
-                    if (sortBy.equals("priority")) {
-                        return Integer.compare(t1.getPriority(), t2.getPriority());
-                    } else if (sortBy.equals("dueDate")) {
-                        return t1.getDueDate().compareTo(t2.getDueDate());
-                    }
-                    return 0;
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<Task> getSortedTaskList(String sortBy) {
+//
+//    }
 
     public void assignTaskToUser(String taskId, User user) {
         Task task = findTaskById(taskId);
