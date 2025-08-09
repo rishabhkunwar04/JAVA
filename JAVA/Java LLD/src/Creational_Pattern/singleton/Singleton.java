@@ -7,7 +7,7 @@ usecases:
 2. *Thread Pool Manager:*	One shared pool to avoid resource overhead
 3. *Database Connection Pool*:	Manage all DB connections centrally
 
-1.  if constructor is private client cannot create obj of class
+1. if constructor is private client cannot create obj of class
 2. get instance method is static because for nonstatic method we need obj to invoke it
 3. instance variable is static because in static method getinstance we have to use static variable
 */
@@ -32,7 +32,7 @@ usecases:
 ////*** Eager Initialization *** //
 
 //// 1. eager initialization waste space it create obj in advance when class loaded,
-//// lets suppose client didnt need any obj to use then its just space wastage
+//// lets suppose client didn't need any obj to use then its just space wastage
 /// final prevents the instance from being reassigned after initialization.
 /*
 public class Singleton {
